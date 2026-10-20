@@ -1,4 +1,10 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react'
+import festivalPoster from './assets/meraki-festival-poster.png'
+import campusBanner from './assets/iiitdm-campus-banner.webp'
+import iiitdmMiniLogo from './assets/iiitdm-mini-logo.jpg'
+import merakiMerch from './assets/meraki-merch.png'
+import merakiLogo from './assets/meraki-logo-2026.jpeg'
+import puzzleTheme from './assets/meraki-puzzle-theme.jpeg'
 
 type View = 'home' | 'register' | 'challenge' | 'result' | 'leaderboard' | 'admin'
 type Participant = {
@@ -13,9 +19,8 @@ type Participant = {
 }
 type Movie = { title: string; year: number; language: string }
 
-const publicAsset = (file: string) => `${import.meta.env.BASE_URL}${file}`
-const HERO = publicAsset('uploads/event-poster.png')
-const PUZZLE = publicAsset('uploads/movie-collage.jpg')
+const HERO = festivalPoster
+const PUZZLE = puzzleTheme
 const languages = ['Tamil', 'English', 'Hindi', 'Telugu', 'Malayalam', 'Kannada', 'Other']
 const movieSets: Record<string, string[]> = {
   Tamil: ['Enthiran', 'Aadukalam', 'Thuppakki', 'Raja Rani', 'Kaththi', 'Thani Oruvan', 'Kabali', 'Vikram Vedha', '96', 'Kaithi'],
@@ -44,7 +49,7 @@ const saveParticipants = (list: Participant[]) => localStorage.setItem('meraki-p
 function Brand() {
   return (
     <button className="brand" onClick={() => location.reload()}>
-      <span className="brand-mark"><img src={publicAsset('uploads/meraki-logo.jpg')} alt="" /></span>
+      <span className="brand-mark brand-image"><img src={merakiLogo} alt="" /></span>
       <span><b>MERAKI</b><small>IIITDM KANCHEEPURAM</small></span>
     </button>
   )
@@ -119,12 +124,7 @@ function Home({ onStart, onLeaderboard, eventOpen }: { onStart: () => void; onLe
         <div className="hero-art">
           <div className="poster">
             <img src={HERO} alt="Meraki Movie Puzzle event poster featuring Indian cinema artwork" />
-            <div className="poster-shade" />
-            <div className="frame-label"><span>FRAME</span><b>?</b></div>
-            <div className="film-holes top" /><div className="film-holes bottom" />
           </div>
-          <div className="sticker sticker-one">60<small>SEC</small></div>
-          <div className="sticker sticker-two">ONE<br />ATTEMPT</div>
         </div>
       </section>
       <section className="how">
@@ -136,14 +136,15 @@ function Home({ onStart, onLeaderboard, eventOpen }: { onStart: () => void; onLe
         </div>
       </section>
       <section className="campus">
-        <div className="campus-copy"><img src={publicAsset('uploads/iiitdm-logo.jpg')} alt="IIITDM Kancheepuram logo" /><div><span className="kicker">OUR CAMPUS</span><h2>Made at IIITDM Kancheepuram.</h2><p>Meraki brings our campus community together through creativity, curiosity, and a shared love of cinema.</p></div></div>
-        <img className="campus-banner" src={publicAsset('uploads/iiitdm-banner.webp')} alt="IIITDM Kancheepuram campus" />
+        <div className="campus-copy"><img src={iiitdmMiniLogo} alt="IIITDM Kancheepuram logo" /><div><span className="kicker">OUR CAMPUS</span><h2>Made at IIITDM Kancheepuram.</h2><p>Meraki brings our campus community together through creativity, curiosity, and a shared love of cinema.</p></div></div>
+        <img className="campus-banner" src={campusBanner} alt="IIITDM Kancheepuram campus" />
       </section>
       <section className="prizes">
         <div><span className="kicker light">MYSTERY BOX REVEALED</span><h2>Fast eyes.<br /><i>Fresh fits.</i></h2><p>Top the leaderboard and take home exclusive Meraki gear.</p></div>
         <div className="prize-cards">
-          <article className="first"><span>#1</span><div className="merch-crop hoodie"><img src={publicAsset('uploads/merch.png')} alt="Black Meraki hoodie, front and back" /></div><div><small>FIRST PLACE</small><h3>Meraki Hoodie</h3><p>Exclusive campus edition</p></div></article>
-          <article><span>#2</span><div className="merch-crop tshirt"><img src={publicAsset('uploads/merch.png')} alt="Black Meraki T-shirt, front and back" /></div><div><small>SECOND PLACE</small><h3>Meraki T-shirt</h3><p>Limited event drop</p></div></article>
+          <img className="merch-showcase" src={merakiMerch} alt="Meraki hoodies and T-shirts, front and back designs" />
+          <article className="first"><span>#1</span><div><small>FIRST PLACE</small><h3>Meraki Hoodie</h3><p>Exclusive campus edition</p></div></article>
+          <article><span>#2</span><div><small>SECOND PLACE</small><h3>Meraki T-shirt</h3><p>Limited event drop</p></div></article>
         </div>
       </section>
     </main>
