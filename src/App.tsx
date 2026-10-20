@@ -124,7 +124,12 @@ function Home({ onStart, onLeaderboard, eventOpen }: { onStart: () => void; onLe
         <div className="hero-art">
           <div className="poster">
             <img src={HERO} alt="Meraki Movie Puzzle event poster featuring Indian cinema artwork" />
+            <div className="poster-shade" />
+            <div className="frame-label"><span>FRAME</span><b>?</b></div>
+            <div className="film-holes top" /><div className="film-holes bottom" />
           </div>
+          <div className="sticker sticker-one">60<small>SEC</small></div>
+          <div className="sticker sticker-two">ONE<br />ATTEMPT</div>
         </div>
       </section>
       <section className="how">
@@ -142,9 +147,8 @@ function Home({ onStart, onLeaderboard, eventOpen }: { onStart: () => void; onLe
       <section className="prizes">
         <div><span className="kicker light">MYSTERY BOX REVEALED</span><h2>Fast eyes.<br /><i>Fresh fits.</i></h2><p>Top the leaderboard and take home exclusive Meraki gear.</p></div>
         <div className="prize-cards">
-          <img className="merch-showcase" src={merakiMerch} alt="Meraki hoodies and T-shirts, front and back designs" />
-          <article className="first"><span>#1</span><div><small>FIRST PLACE</small><h3>Meraki Hoodie</h3><p>Exclusive campus edition</p></div></article>
-          <article><span>#2</span><div><small>SECOND PLACE</small><h3>Meraki T-shirt</h3><p>Limited event drop</p></div></article>
+          <article className="first"><span>#1</span><div className="merch-crop hoodie"><img src={merakiMerch} alt="Meraki hoodie front and back" /></div><div><small>FIRST PLACE</small><h3>Meraki Hoodie</h3><p>Exclusive campus edition</p></div></article>
+          <article><span>#2</span><div className="merch-crop tshirt"><img src={merakiMerch} alt="Meraki T-shirt front and back" /></div><div><small>SECOND PLACE</small><h3>Meraki T-shirt</h3><p>Limited event drop</p></div></article>
         </div>
       </section>
     </main>
