@@ -13,8 +13,9 @@ type Participant = {
 }
 type Movie = { title: string; year: number; language: string }
 
-const HERO = '/uploads/event-poster.png'
-const PUZZLE = '/uploads/movie-collage.jpg'
+const publicAsset = (file: string) => `${import.meta.env.BASE_URL}${file}`
+const HERO = publicAsset('uploads/event-poster.png')
+const PUZZLE = publicAsset('uploads/movie-collage.jpg')
 const languages = ['Tamil', 'English', 'Hindi', 'Telugu', 'Malayalam', 'Kannada', 'Other']
 const movieSets: Record<string, string[]> = {
   Tamil: ['Enthiran', 'Aadukalam', 'Thuppakki', 'Raja Rani', 'Kaththi', 'Thani Oruvan', 'Kabali', 'Vikram Vedha', '96', 'Kaithi'],
@@ -43,7 +44,7 @@ const saveParticipants = (list: Participant[]) => localStorage.setItem('meraki-p
 function Brand() {
   return (
     <button className="brand" onClick={() => location.reload()}>
-      <span className="brand-mark"><img src="/uploads/meraki-logo.jpg" alt="" /></span>
+      <span className="brand-mark"><img src={publicAsset('uploads/meraki-logo.jpg')} alt="" /></span>
       <span><b>MERAKI</b><small>IIITDM KANCHEEPURAM</small></span>
     </button>
   )
@@ -135,14 +136,14 @@ function Home({ onStart, onLeaderboard, eventOpen }: { onStart: () => void; onLe
         </div>
       </section>
       <section className="campus">
-        <div className="campus-copy"><img src="/uploads/iiitdm-logo.jpg" alt="IIITDM Kancheepuram logo" /><div><span className="kicker">OUR CAMPUS</span><h2>Made at IIITDM Kancheepuram.</h2><p>Meraki brings our campus community together through creativity, curiosity, and a shared love of cinema.</p></div></div>
-        <img className="campus-banner" src="/uploads/iiitdm-banner.webp" alt="IIITDM Kancheepuram campus" />
+        <div className="campus-copy"><img src={publicAsset('uploads/iiitdm-logo.jpg')} alt="IIITDM Kancheepuram logo" /><div><span className="kicker">OUR CAMPUS</span><h2>Made at IIITDM Kancheepuram.</h2><p>Meraki brings our campus community together through creativity, curiosity, and a shared love of cinema.</p></div></div>
+        <img className="campus-banner" src={publicAsset('uploads/iiitdm-banner.webp')} alt="IIITDM Kancheepuram campus" />
       </section>
       <section className="prizes">
         <div><span className="kicker light">MYSTERY BOX REVEALED</span><h2>Fast eyes.<br /><i>Fresh fits.</i></h2><p>Top the leaderboard and take home exclusive Meraki gear.</p></div>
         <div className="prize-cards">
-          <article className="first"><span>#1</span><div className="merch-crop hoodie"><img src="/uploads/merch.png" alt="Black Meraki hoodie, front and back" /></div><div><small>FIRST PLACE</small><h3>Meraki Hoodie</h3><p>Exclusive campus edition</p></div></article>
-          <article><span>#2</span><div className="merch-crop tshirt"><img src="/uploads/merch.png" alt="Black Meraki T-shirt, front and back" /></div><div><small>SECOND PLACE</small><h3>Meraki T-shirt</h3><p>Limited event drop</p></div></article>
+          <article className="first"><span>#1</span><div className="merch-crop hoodie"><img src={publicAsset('uploads/merch.png')} alt="Black Meraki hoodie, front and back" /></div><div><small>FIRST PLACE</small><h3>Meraki Hoodie</h3><p>Exclusive campus edition</p></div></article>
+          <article><span>#2</span><div className="merch-crop tshirt"><img src={publicAsset('uploads/merch.png')} alt="Black Meraki T-shirt, front and back" /></div><div><small>SECOND PLACE</small><h3>Meraki T-shirt</h3><p>Limited event drop</p></div></article>
         </div>
       </section>
     </main>
