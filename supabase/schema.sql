@@ -36,6 +36,12 @@ create table if not exists public.game_entries (
   )
 );
 
+create table if not exists public.movie_assignments (
+  movie_id uuid primary key references public.movies(id),
+  game_entry_id uuid not null unique references public.game_entries(id),
+  assigned_at timestamptz not null default now()
+);
+
 create unique index if not exists game_entries_roll_number_unique
   on public.game_entries (upper(roll_number));
 
@@ -117,18 +123,27 @@ begin
     raise exception 'The event is currently closed.';
   end if;
 
+  perform pg_catalog.pg_advisory_xact_lock(pg_catalog.hashtextextended(normalized_language, 0));
+
   select * into selected_movie
   from public.movies m
-  where m.language = normalized_language and m.active
+  where m.language = normalized_language
+    and m.active
+    and not exists (
+      select 1 from public.movie_assignments a where a.movie_id = m.id
+    )
   order by random()
   limit 1;
   if selected_movie.id is null then
-    raise exception 'There are no active movies for this language.';
+    raise exception 'All movies for this language have already been assigned. Please ask an organizer to add more movies.';
   end if;
 
   insert into public.game_entries (full_name, roll_number, language, movie_id)
   values (trim(p_full_name), normalized_roll, normalized_language, selected_movie.id)
   returning * into inserted_entry;
+
+  insert into public.movie_assignments (movie_id, game_entry_id)
+  values (selected_movie.id, inserted_entry.id);
 
   return query select inserted_entry.id, selected_movie.title, selected_movie.release_year,
     selected_movie.language, selected_movie.image_url, inserted_entry.started_at;
@@ -224,6 +239,7 @@ $$;
 alter table public.movies enable row level security;
 alter table public.admin_users enable row level security;
 alter table public.game_entries enable row level security;
+alter table public.movie_assignments enable row level security;
 alter table public.event_settings enable row level security;
 
 drop policy if exists "Active movies are readable" on public.movies;
@@ -259,6 +275,7 @@ revoke all on function public.is_event_admin() from public;
 revoke all on function public.register_game(text, text, text) from public;
 revoke all on function public.finish_game(uuid, text) from public;
 revoke all on function public.get_leaderboard() from public;
+revoke all on table public.movie_assignments from public, anon, authenticated;
 grant execute on function public.is_event_admin() to authenticated;
 grant execute on function public.register_game(text, text, text) to anon, authenticated;
 grant execute on function public.finish_game(uuid, text) to anon, authenticated;
