@@ -22,6 +22,18 @@ type Participant = {
 const HERO = festivalPoster
 const languages = ['Tamil', 'English', 'Hindi', 'Telugu', 'Malayalam', 'Kannada', 'Other']
 
+function shuffledTiles() {
+  const tiles = Array.from({ length: 16 }, (_, index) => index)
+  for (let index = tiles.length - 1; index > 0; index--) {
+    const swapIndex = Math.floor(Math.random() * (index + 1))
+    const current = tiles[index]
+    tiles[index] = tiles[swapIndex]
+    tiles[swapIndex] = current
+  }
+  if (tiles.every((tile, index) => tile === index)) [tiles[0], tiles[1]] = [tiles[1], tiles[0]]
+  return tiles
+}
+
 const icons = {
   ticket: (
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8.5a2.5 2.5 0 0 0 0 5V18h18v-4.5a2.5 2.5 0 0 0 0-5V4H3v4.5Z"/><path d="M9 4v14M9 8h.01M9 12h.01M9 16h.01"/></svg>
@@ -223,6 +235,7 @@ function Registration({ onBack, onComplete, eventOpen }: { onBack: () => void; o
 function Challenge({ participant, onComplete }: { participant: Participant; onComplete: (p: Participant) => void }) {
   const [answer, setAnswer] = useState('')
   const [seconds, setSeconds] = useState(Math.max(0, 60 - Math.floor((Date.now() - (participant.startedAt || Date.now())) / 1000)))
+  const tiles = useMemo(() => shuffledTiles(), [participant.id])
   const [imageUrl, setImageUrl] = useState(participant.movie.imageUrl)
   const [imageError, setImageError] = useState('')
   const [submitError, setSubmitError] = useState('')
@@ -285,8 +298,8 @@ function Challenge({ participant, onComplete }: { participant: Participant; onCo
     <main className="challenge-page">
       <div className="challenge-head"><div><span className="kicker light">THE FRAME · {participant.movie.language.toUpperCase()}</span><h1>Name that movie.</h1></div><div className={`timer ${seconds < 11 ? 'danger' : ''}`}><span>{icons.clock}</span><b>{String(seconds).padStart(2, '0')}</b><small>SECONDS</small></div></div>
       <div className="challenge-layout">
-        <div className={`puzzle ${imageUrl ? '' : 'puzzle-loading'}`} aria-label="Movie artwork split into sixteen tiles">
-          {imageUrl ? Array.from({ length: 16 }).map((_, i) => <div key={i} style={{ backgroundImage: `url("${imageUrl.replace(/["\\]/g, '\\$&')}")`, backgroundPosition: `${(i % 4) * 33.33}% ${Math.floor(i / 4) * 33.33}%` }}><span>{String(i + 1).padStart(2, '0')}</span></div>) : <p>{imageError || 'Loading movie artwork…'}</p>}
+        <div className={`puzzle ${imageUrl ? '' : 'puzzle-loading'}`} role="img" aria-label="Movie poster scrambled into sixteen tiles in a four by four grid">
+          {imageUrl ? tiles.map((tile, i) => <div key={i} aria-hidden="true" style={{ backgroundImage: `url("${imageUrl.replace(/["\\]/g, '\\$&')}")`, backgroundPosition: `${(tile % 4) * 100 / 3}% ${Math.floor(tile / 4) * 100 / 3}%` }} />) : <p>{imageError || 'Loading movie artwork…'}</p>}
         </div>
         <form className="guess-panel" onSubmit={submit}><span className="kicker">YOUR ONE SHOT</span><h2>What’s the movie?</h2><p>Type the full title. Capitalization doesn’t matter.</p><label>Your answer<input value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder="Enter movie title…" autoFocus disabled={submitting} /></label>{submitError && <p className="error">{submitError}</p>}<button className="primary wide" disabled={!answer.trim() || submitting}>{submitting ? 'Submitting…' : 'Lock my answer'} {icons.arrow}</button><div className="warning">Once submitted, your answer cannot be changed.</div></form>
       </div>
