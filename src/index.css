@@ -40,3 +40,4 @@ body{background-color:#f3d39a;background-image:radial-gradient(#0b0a0812 1px,tra
 .brand-mark.brand-image img{width:100%;height:100%;object-fit:contain;transform:none}
 .poster{height:510px;overflow:hidden;transform:rotate(2deg)}
 .poster img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+.hero h1 em{color:#c2410c}
