@@ -14,4 +14,6 @@
 
 For an existing project, run [`migrations/20261021_restrict_movie_catalog.sql`](./migrations/20261021_restrict_movie_catalog.sql) once in the Supabase SQL Editor. It activates five selected movies in Tamil, Hindi, English, Telugu, and Malayalam; deactivates other catalog entries; and restricts new registrations to those five languages. Existing movie rows, artwork URLs, and game history are preserved.
 
-The catalog seeds five movies per language. Artwork is looked up by movie title from Wikipedia when a catalog image URL has not been set. Admins can save a discovered image or enter an image URL, add titles, and disable/restore movies without deleting historical game records.
+The catalog seeds five movies per language. Movie artwork is stored in the public `meraki-movie-artwork` Storage bucket so puzzle images can load in the participant app. The completed [`movie-artwork-template.csv`](./movie-artwork-template.csv) lists the active movies and their direct image URLs. To apply these image mappings to this project, run [`migrations/20261021_update_movie_artwork.sql`](./migrations/20261021_update_movie_artwork.sql) in the SQL Editor.
+
+Admins can save a discovered image or enter an image URL, add titles, and disable/restore movies without deleting historical game records.
