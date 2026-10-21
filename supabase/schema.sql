@@ -4,7 +4,7 @@ create table if not exists public.movies (
   id uuid primary key default gen_random_uuid(),
   title text not null,
   release_year integer not null check (release_year between 1888 and 2100),
-  language text not null check (language in ('Tamil', 'English', 'Hindi', 'Telugu', 'Malayalam', 'Kannada', 'Other')),
+  language text not null check (language in ('Tamil', 'Hindi', 'English', 'Telugu', 'Malayalam')),
   image_url text,
   active boolean not null default true,
   created_at timestamptz not null default now(),
@@ -21,7 +21,7 @@ create table if not exists public.game_entries (
   id uuid primary key default gen_random_uuid(),
   full_name text not null,
   roll_number text not null,
-  language text not null check (language in ('Tamil', 'English', 'Hindi', 'Telugu', 'Malayalam', 'Kannada', 'Other')),
+  language text not null check (language in ('Tamil', 'Hindi', 'English', 'Telugu', 'Malayalam')),
   movie_id uuid not null references public.movies(id),
   started_at timestamptz not null default now(),
   finished_at timestamptz,
@@ -51,33 +51,15 @@ on conflict (id) do nothing;
 
 insert into public.movies (title, release_year, language) values
   ('Enthiran', 2010, 'Tamil'), ('Aadukalam', 2011, 'Tamil'), ('Thuppakki', 2012, 'Tamil'),
-  ('Raja Rani', 2013, 'Tamil'), ('Kaththi', 2014, 'Tamil'), ('Thani Oruvan', 2015, 'Tamil'),
-  ('Kabali', 2016, 'Tamil'), ('Vikram Vedha', 2017, 'Tamil'), ('96', 2018, 'Tamil'),
-  ('Kaithi', 2019, 'Tamil'),
-  ('Inception', 2010, 'English'), ('Interstellar', 2014, 'English'), ('Whiplash', 2014, 'English'),
-  ('Mad Max: Fury Road', 2015, 'English'), ('La La Land', 2016, 'English'), ('Get Out', 2017, 'English'),
-  ('Coco', 2017, 'English'), ('Avengers: Endgame', 2019, 'English'), ('Joker', 2019, 'English'),
-  ('Tenet', 2020, 'English'),
+  ('Raja Rani', 2013, 'Tamil'), ('Kaththi', 2014, 'Tamil'),
   ('Zindagi Na Milegi Dobara', 2011, 'Hindi'), ('Barfi!', 2012, 'Hindi'), ('Queen', 2013, 'Hindi'),
-  ('PK', 2014, 'Hindi'), ('Bajrangi Bhaijaan', 2015, 'Hindi'), ('Dangal', 2016, 'Hindi'),
-  ('Hindi Medium', 2017, 'Hindi'), ('Andhadhun', 2018, 'Hindi'), ('Gully Boy', 2019, 'Hindi'),
-  ('Ludo', 2020, 'Hindi'),
-  ('Eega', 2012, 'Telugu'), ('Mirchi', 2013, 'Telugu'), ('Manam', 2014, 'Telugu'),
-  ('Baahubali: The Beginning', 2015, 'Telugu'), ('Kshanam', 2016, 'Telugu'), ('Arjun Reddy', 2017, 'Telugu'),
-  ('Rangasthalam', 2018, 'Telugu'), ('Jersey', 2019, 'Telugu'), ('Ala Vaikunthapurramuloo', 2020, 'Telugu'),
-  ('Colour Photo', 2020, 'Telugu'),
+  ('PK', 2014, 'Hindi'), ('Bajrangi Bhaijaan', 2015, 'Hindi'),
+  ('Inception', 2010, 'English'), ('Interstellar', 2014, 'English'), ('Whiplash', 2014, 'English'),
+  ('Mad Max: Fury Road', 2015, 'English'), ('La La Land', 2016, 'English'),
   ('Drishyam', 2013, 'Malayalam'), ('Bangalore Days', 2014, 'Malayalam'), ('Premam', 2015, 'Malayalam'),
   ('Charlie', 2015, 'Malayalam'), ('Maheshinte Prathikaaram', 2016, 'Malayalam'),
-  ('Kumbalangi Nights', 2019, 'Malayalam'), ('Take Off', 2017, 'Malayalam'), ('Uyare', 2019, 'Malayalam'),
-  ('Ayyappanum Koshiyum', 2020, 'Malayalam'), ('Minnal Murali', 2021, 'Malayalam'),
-  ('Lucia', 2013, 'Kannada'), ('U Turn', 2016, 'Kannada'), ('Kirik Party', 2016, 'Kannada'),
-  ('Rangitaranga', 2015, 'Kannada'), ('Avane Srimannarayana', 2019, 'Kannada'), ('Dia', 2020, 'Kannada'),
-  ('Garuda Gamana Vrishabha Vahana', 2021, 'Kannada'), ('777 Charlie', 2022, 'Kannada'),
-  ('Kantara', 2022, 'Kannada'), ('Sapta Sagaradaache Ello', 2023, 'Kannada'),
-  ('Parasite', 2019, 'Other'), ('Spirited Away', 2001, 'Other'), ('Amélie', 2001, 'Other'),
-  ('Pan''s Labyrinth', 2006, 'Other'), ('Roma', 2018, 'Other'), ('Cinema Paradiso', 1988, 'Other'),
-  ('The Lives of Others', 2006, 'Other'), ('Run Lola Run', 1998, 'Other'),
-  ('Crouching Tiger, Hidden Dragon', 2000, 'Other'), ('The Intouchables', 2011, 'Other')
+  ('Eega', 2012, 'Telugu'), ('Mirchi', 2013, 'Telugu'), ('Manam', 2014, 'Telugu'),
+  ('Baahubali: The Beginning', 2015, 'Telugu'), ('Kshanam', 2016, 'Telugu')
 on conflict (language, title) do nothing;
 
 create or replace function public.is_event_admin()
@@ -125,8 +107,6 @@ begin
     when 'hindi' then 'Hindi'
     when 'telugu' then 'Telugu'
     when 'malayalam' then 'Malayalam'
-    when 'kannada' then 'Kannada'
-    when 'other' then 'Other'
     else null
   end;
   if normalized_language is null then
