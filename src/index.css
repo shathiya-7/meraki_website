@@ -75,3 +75,5 @@ body{background-color:#f3d39a;background-image:radial-gradient(#0b0a0812 1px,tra
 .leader-card .empty{padding:24px}
 @media(max-width:900px){.movie-catalog{grid-template-columns:repeat(3,minmax(0,1fr))}.movie-form{grid-template-columns:1fr 1fr}.movie-form .primary{width:100%}}
 @media(max-width:650px){.admin-actions{align-items:flex-end;flex-direction:column}.admin-row{grid-template-columns:1fr 1fr;gap:10px}.admin-row.header{display:none}.library-heading{align-items:stretch;flex-direction:column}.library-heading select{width:100%}.movie-catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.movie-library{padding:18px}.movie-form{grid-template-columns:1fr}.movie-form .primary{width:100%}}
+.puzzle{aspect-ratio:3/4}
+.puzzle div,.puzzle div:nth-child(3n){filter:none;background-size:400% 400%;background-repeat:no-repeat}
