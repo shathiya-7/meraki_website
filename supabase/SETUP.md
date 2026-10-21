@@ -19,3 +19,5 @@ The catalog seeds five movies per language. Movie artwork is stored in the publi
 Admins can save a discovered image or enter an image URL, add titles, and disable/restore movies without deleting historical game records.
 
 To ensure participants selecting the same language receive different movie questions, run [`migrations/20261021_unique_movie_assignments.sql`](./migrations/20261021_unique_movie_assignments.sql) once in the SQL Editor. Each active movie is assigned to at most one new registration; once a language has no unassigned active movies, registrations in that language are blocked until an admin adds more movies. Existing completed game history is preserved and does not consume the new assignment pool; attempts already in progress when the migration runs are reserved.
+
+To remove movies that do not have an artwork URL, run [`migrations/20261021_remove_movies_without_artwork.sql`](./migrations/20261021_remove_movies_without_artwork.sql). It preserves any movie referenced by a game entry or assignment.
