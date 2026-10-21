@@ -41,3 +41,37 @@ body{background-color:#f3d39a;background-image:radial-gradient(#0b0a0812 1px,tra
 .poster{height:510px;overflow:hidden;transform:rotate(2deg)}
 .poster img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
 .hero h1 em{color:#c2410c}
+.setup-notice{padding:12px 5vw;background:#fff1c2;color:#684817;font-size:13px;text-align:center}
+.admin-login form{display:grid;gap:12px}
+.admin-login form input{width:100%;border:1px solid #dac8e0;border-radius:10px;background:white;padding:14px;outline:none}
+.admin-actions{display:flex;align-items:center;gap:12px}
+.admin-actions>button:not(.status-open):not(.status-closed),.movie-card button,.movie-artwork button{border:1px solid #0b0a08;border-radius:999px;background:transparent;padding:8px 12px;font-weight:700}
+.admin-actions button:disabled,.movie-form button:disabled{opacity:.55;cursor:wait}
+.admin-row{grid-template-columns:1.25fr .7fr .65fr .45fr 1fr}
+.admin-row>span{min-width:0;overflow-wrap:anywhere}
+.admin-row>span small{display:block;font-size:10px;line-height:1.5;color:#80668a}
+.movie-library{margin-top:28px;padding:28px;background:#fff8e8;border-radius:20px}
+.library-heading{display:flex;justify-content:space-between;align-items:center;gap:24px}
+.library-heading h2{margin:0 0 6px}
+.library-heading p{margin:0;color:#80668a;font-size:13px}
+.library-heading label{font-size:12px;font-weight:700}
+.library-heading select,.movie-form input,.movie-form select{border:1px solid #dac8e0;border-radius:10px;background:white;padding:11px;color:#0b0a08}
+.library-heading select{display:block;min-width:190px;margin-top:6px}
+.movie-form{display:grid;grid-template-columns:1.1fr .55fr .8fr 1.2fr auto;gap:9px;margin:24px 0}
+.movie-form .primary{margin:0;padding:10px 16px}
+.movie-catalog{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.movie-card{overflow:hidden;border:1px solid #eadcc2;border-radius:12px;background:white}
+.movie-card.inactive{opacity:.6}
+.movie-artwork{position:relative;height:150px;background:#19130d;color:#fff}
+.movie-artwork img{width:100%;height:100%;object-fit:cover}
+.movie-artwork-empty{height:100%;display:grid;place-items:center;padding:14px;text-align:center;font-size:11px}
+.movie-artwork button{position:absolute;bottom:7px;left:7px;background:#fff8e8;font-size:10px}
+.movie-card>div:last-child{display:grid;gap:6px;padding:10px}
+.movie-card>div:last-child b{font-size:12px}
+.movie-card>div:last-child span{font-size:10px;color:#80668a}
+.movie-card>div:last-child button{justify-self:start;margin-top:3px;font-size:10px}
+.puzzle-loading{display:grid;place-items:center;background:#211a13;color:#fff;padding:30px}
+.puzzle-loading p{text-align:center;line-height:1.6}
+.leader-card .empty{padding:24px}
+@media(max-width:900px){.movie-catalog{grid-template-columns:repeat(3,minmax(0,1fr))}.movie-form{grid-template-columns:1fr 1fr}.movie-form .primary{width:100%}}
+@media(max-width:650px){.admin-actions{align-items:flex-end;flex-direction:column}.admin-row{grid-template-columns:1fr 1fr;gap:10px}.admin-row.header{display:none}.library-heading{align-items:stretch;flex-direction:column}.library-heading select{width:100%}.movie-catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.movie-library{padding:18px}.movie-form{grid-template-columns:1fr}.movie-form .primary{width:100%}}
